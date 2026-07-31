@@ -47,10 +47,10 @@ body {
 /* Privremeni logo */
 
 .logo {
-    width: 200px;
+    width: 220px;
     height: auto;
     display: block;
-    margin-bottom: 45px;
+    margin-bottom: 55px;
 
     filter:
         drop-shadow(0 0 14px rgba(255,255,255,0.08))
@@ -79,7 +79,8 @@ body {
 
 h1 {
     margin: 0;
-    font-size: clamp(52px, 9vw, 92px);
+    font-size: clamp(58px, 9vw, 96px);
+    text-shadow: 0 8px 30px rgba(0,0,0,.35);
     line-height: 1;
     letter-spacing: -3px;
     font-weight: 800;
@@ -90,18 +91,18 @@ h1 {
 /* Tekst ispod naslova */
 
 .subtitle {
-    margin: 22px 0 0;
+    margin: 26px 0 0;
     font-size: clamp(17px, 2.6vw, 23px);
     font-weight: 600;
-    letter-spacing: 1.5px;
+    letter-spacing: 2px;
     color: #60a5fa;
 }
 
 .description {
-    max-width: 680px;
+    max-width: 720px;
     margin: 24px auto 0;
     font-size: clamp(18px, 2.4vw, 24px);
-    line-height: 1.65;
+    line-height: 1.8;
     color: #cbd5e1;
 }
 
@@ -128,6 +129,9 @@ h1 {
     font-size: 16px;
     font-weight: 700;
     text-decoration: none;
+    
+    cursor: pointer;
+    
     transition:
         transform 0.2s ease,
         box-shadow 0.2s ease,
@@ -136,7 +140,7 @@ h1 {
 }
 
 .btn:hover {
-    transform: translateY(-3px);
+    transform: translateY(-4px) scale(1.03);
 }
 
 .btn:active {
