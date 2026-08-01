@@ -248,19 +248,6 @@ h1 {
     color: #cbd5e1;
 }
 
-    .services {
-        padding: 90px 20px;
-    }
-
-    .services-grid {
-        grid-template-columns: 1fr;
-        gap: 18px;
-    }
-
-    .service-card {
-        text-align: center;
-    }
-
 .services-grid {
     margin-top: 56px;
     display: grid;
