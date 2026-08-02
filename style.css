@@ -288,6 +288,24 @@ h1 {
     color: #cbd5e1;
 }
 
+.service-icon {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: rgba(37, 99, 235, 0.12);
+    color: #60a5fa;
+}
+
+.service-icon svg {
+    width: 28px;
+    height: 28px;
+    stroke-width: 2;
+}
+
 @media (max-width: 600px) {
 
     .services {
