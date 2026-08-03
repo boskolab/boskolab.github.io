@@ -339,3 +339,25 @@ h1 {
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
 }
+
+.project-card {
+    padding: 38px 30px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    text-align: left;
+}
+
+.project-card h3 {
+    margin: 0;
+    font-size: 22px;
+    color: #ffffff;
+}
+
+.project-card p {
+    margin: 18px 0 0;
+    font-size: 17px;
+    line-height: 1.7;
+    color: #cbd5e1;
+}
