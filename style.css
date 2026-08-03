@@ -332,3 +332,10 @@ h1 {
     padding: 120px 24px;
     text-align: center;
 }
+
+.projects-grid {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
