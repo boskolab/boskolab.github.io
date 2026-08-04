@@ -426,15 +426,26 @@ h1 {
 .about-features {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 16px;
 }
 
-.about-features p {
-    margin: 0;
-    padding: 16px 22px;
+.about-feature {
+    min-height: 50px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.10);
     border-radius: 14px;
     background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.10);
     color: #ffffff;
     font-weight: 600;
+}
+
+.about-feature svg {
+    width: 21px;
+    height: 21px;
+    flex-shrink: 0;
+    color: #60a5fa;
+    stroke-width: 2;
 }
