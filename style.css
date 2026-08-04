@@ -389,3 +389,21 @@ h1 {
     line-height: 1.7;
     color: #cbd5e1;
 }
+
+/* ===========================
+   ABOUT
+=========================== */
+
+.about {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 24px 120px;
+    text-align: center;
+}
+
+.about h2 {
+    margin: 0;
+    font-size: clamp(38px, 5vw, 56px);
+    font-weight: 800;
+    color: #ffffff;
+}
