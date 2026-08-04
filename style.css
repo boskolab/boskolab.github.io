@@ -449,3 +449,35 @@ h1 {
     color: #60a5fa;
     stroke-width: 2;
 }
+
+/* ===========================
+   CONTACT
+=========================== */
+
+.contact {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 80px 24px 140px;
+    text-align: center;
+}
+
+.contact h2 {
+    margin: 0;
+    font-size: clamp(38px, 5vw, 56px);
+    font-weight: 800;
+    color: #ffffff;
+}
+
+.contact .section-intro {
+    max-width: 720px;
+    margin: 24px auto 0;
+}
+
+.contact-buttons {
+    margin-top: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
