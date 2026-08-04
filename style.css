@@ -333,20 +333,18 @@ h1 {
     text-align: center;
 }
 
+.projects h2 {
+    margin: 0;
+    font-size: clamp(38px, 5vw, 56px);
+    font-weight: 800;
+    color: #ffffff;
+}
+
 .projects-grid {
     margin-top: 56px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
-}
-
-.project-card {
-    padding: 38px 30px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 18px;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(12px);
-    text-align: left;
 }
 
 .project-card {
@@ -366,12 +364,9 @@ h1 {
 
 .project-card:hover {
     transform: translateY(-8px);
-
     background: rgba(255, 255, 255, 0.08);
     border-color: rgba(96, 165, 250, 0.35);
-
-    box-shadow:
-        0 20px 40px rgba(0, 0, 0, .25);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, .25);
 }
 
 .project-card:hover .service-icon {
