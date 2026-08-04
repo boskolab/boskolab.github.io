@@ -374,6 +374,14 @@ h1 {
         0 20px 40px rgba(0, 0, 0, .25);
 }
 
+.project-card:hover .service-icon {
+    transform: scale(1.08);
+}
+
+.project-card .service-icon {
+    transition: transform .30s ease;
+}
+
 .project-card h3 {
     margin: 0;
     font-size: 22px;
