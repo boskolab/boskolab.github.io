@@ -488,3 +488,24 @@ h1 {
     color: #94a3b8;
     letter-spacing: 0.3px;
 }
+
+@media (max-width: 768px) {
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-content {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .about-text {
+        text-align: center;
+    }
+
+    .contact {
+        padding: 60px 20px 100px;
+    }
+
+}
