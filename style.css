@@ -548,4 +548,12 @@ h1 {
     .footer {
         padding: 32px 20px;
     }
+
+}
+html {
+    scroll-padding-top: 24px;
+}
+
+section {
+    scroll-margin-top: 24px;
 }
