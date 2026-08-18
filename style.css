@@ -215,7 +215,35 @@ h1 {
         max-width: 320px;
     }
 }
+@media (max-width: 600px) {
 
+    .about {
+        padding: 60px 20px 90px;
+    }
+
+    .about-content {
+        margin-top: 40px;
+    }
+
+    .about-feature {
+        justify-content: flex-start;
+        text-align: left;
+    }
+
+    .contact-buttons {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .contact-buttons .btn {
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .footer {
+        padding: 32px 20px;
+    }
+}
 /* ===========================
    SERVICES
 =========================== */
