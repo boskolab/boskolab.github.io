@@ -642,11 +642,11 @@ h1 {
 
 }
 html {
-    scroll-padding-top: 24px;
+    scroll-padding-top: 96px;
 }
 
 section {
-    scroll-margin-top: 24px;
+    scroll-margin-top: 96px;
 }
 
 .reveal {
