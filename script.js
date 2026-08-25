@@ -56,3 +56,17 @@ const navigationObserver = new IntersectionObserver(
 sections.forEach((section) => {
     navigationObserver.observe(section);
 });
+
+const siteNav = document.querySelector(".site-nav");
+
+const updateNavigationState = () => {
+    if (window.scrollY > 20) {
+        siteNav.classList.add("scrolled");
+    } else {
+        siteNav.classList.remove("scrolled");
+    }
+};
+
+window.addEventListener("scroll", updateNavigationState);
+
+updateNavigationState();
