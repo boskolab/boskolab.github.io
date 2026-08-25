@@ -96,7 +96,11 @@ body {
     transition: transform 0.25s ease;
 }
 
-.nav-links a:hover::after {
+.nav-links a.active {
+    color: #60a5fa;
+}
+
+.nav-links a.active::after {
     transform: scaleX(1);
 }
 
