@@ -45,8 +45,19 @@ body {
     align-items: center;
     justify-content: space-between;
 
+        background: rgba(8, 16, 31, 0.35);
+    border-bottom: 1px solid transparent;
+    backdrop-filter: blur(10px);
+
+    transition:
+        background 0.3s ease,
+        border-color 0.3s ease,
+        backdrop-filter 0.3s ease;
+}
+
+.site-nav.scrolled {
     background: rgba(8, 16, 31, 0.82);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom-color: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(14px);
 }
 
