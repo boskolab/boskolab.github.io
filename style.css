@@ -551,6 +551,23 @@ h1 {
 
 @media (max-width: 600px) {
 
+    .site-nav {
+        height: 64px;
+        padding: 0 20px;
+    }
+
+    .nav-brand {
+        font-size: 18px;
+    }
+
+    .nav-links {
+        gap: 16px;
+    }
+
+    .nav-links a {
+        font-size: 13px;
+    }
+
     .hero {
         padding: 40px 20px;
     }
