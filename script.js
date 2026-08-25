@@ -33,16 +33,18 @@ const navigationObserver = new IntersectionObserver(
             if (entry.isIntersecting) {
 
                 navLinks.forEach((link) => {
-                    link.classList.remove("active");
-                });
+    link.classList.remove("active");
+    link.removeAttribute("aria-current");
+});
 
-                const activeLink = document.querySelector(
-                    `.nav-links a[href="#${entry.target.id}"]`
-                );
+const activeLink = document.querySelector(
+    `.nav-links a[href="#${entry.target.id}"]`
+);
 
-                if (activeLink) {
-                    activeLink.classList.add("active");
-                }
+if (activeLink) {
+    activeLink.classList.add("active");
+    activeLink.setAttribute("aria-current", "page");
+}
             }
         });
     },
