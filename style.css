@@ -512,18 +512,26 @@ h1 {
     font-weight: 600;
 }
 
+.about-feature svg,
+.about-feature span {
+    transition: transform .30s ease;
+}
+
 .about-feature svg {
     width: 21px;
     height: 21px;
     flex-shrink: 0;
     color: #60a5fa;
     stroke-width: 2;
-
-    transition: transform .30s ease;
 }
 
 .about-feature:hover svg {
     transform: scale(1.10);
+}
+
+.about-feature:hover span {
+    transform: scale(1.03);
+}
 }
 
 /* ===========================
