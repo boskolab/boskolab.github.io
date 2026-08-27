@@ -738,4 +738,13 @@ section {
         transform: none;
         transition: none;
     }
+
+    .site-nav,
+    .service-card,
+    .project-card,
+    .service-icon,
+    .about-feature svg,
+    .about-feature span {
+        transition: none;
+    }
 }
