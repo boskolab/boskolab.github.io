@@ -611,16 +611,16 @@ h1 {
         padding: 0 20px;
     }
 
+    html {
+        scroll-padding-top: 88px;
+    }
+
+    section {
+        scroll-margin-top: 88px;
+    }
+
     .nav-brand {
         font-size: 18px;
-    }
-
-    .nav-links {
-        gap: 16px;
-    }
-
-    .nav-links a {
-        font-size: 13px;
     }
 
     .hero {
