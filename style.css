@@ -518,6 +518,12 @@ h1 {
     flex-shrink: 0;
     color: #60a5fa;
     stroke-width: 2;
+
+    transition: transform .30s ease;
+}
+
+.about-feature:hover svg {
+    transform: scale(1.10);
 }
 
 /* ===========================
