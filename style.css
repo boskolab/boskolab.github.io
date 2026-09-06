@@ -748,6 +748,10 @@ section {
     }
 
     .site-nav,
+    .nav-links a,
+    .nav-links a::after,
+    .logo,
+    .btn,
     .service-card,
     .project-card,
     .service-icon,
