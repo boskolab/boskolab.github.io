@@ -45,7 +45,7 @@ body {
     align-items: center;
     justify-content: space-between;
 
-        background: rgba(8, 16, 31, 0.35);
+    background: rgba(8, 16, 31, 0.35);
     border-bottom: 1px solid transparent;
     backdrop-filter: blur(10px);
 
@@ -636,6 +636,14 @@ section {
 
     .nav-brand {
         font-size: 18px;
+    }
+
+    .nav-links {
+        gap: 16px;
+    }
+
+    .nav-links a {
+        font-size: 13px;
     }
 
     .hero {
