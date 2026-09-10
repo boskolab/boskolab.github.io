@@ -75,16 +75,23 @@ updateNavigationState();
 
 // BoskoLab AI Assistant
 
+const AI_CHAT_ENDPOINT =
+    "https://boskolab-ai-assistant.boskoj23.workers.dev/chat";
+
 const aiChat = document.querySelector(".ai-chat");
 const aiChatToggle = document.querySelector(".ai-chat-toggle");
 const aiChatPanel = document.querySelector(".ai-chat-panel");
 const aiChatMinimize = document.querySelector(".ai-chat-minimize");
 const aiChatClose = document.querySelector(".ai-chat-close");
+const aiChatBody = document.querySelector(".ai-chat-body");
 const aiChatInput = document.querySelector("#ai-chat-input");
 const aiChatForm = document.querySelector(".ai-chat-form");
+const aiChatSend = aiChatForm?.querySelector('button[type="submit"]');
 const aiChatSuggestions = document.querySelectorAll(
     ".ai-chat-suggestions button"
 );
+
+let aiChatBusy = false;
 
 const setAiChatOpen = (isOpen) => {
     if (!aiChat || !aiChatToggle || !aiChatPanel) {
@@ -97,6 +104,101 @@ const setAiChatOpen = (isOpen) => {
 
     if (isOpen && aiChatInput) {
         aiChatInput.focus();
+    }
+};
+
+const scrollAiChatToBottom = () => {
+    if (aiChatBody) {
+        aiChatBody.scrollTop = aiChatBody.scrollHeight;
+    }
+};
+
+const addAiMessage = (text, type) => {
+    if (!aiChatBody) {
+        return null;
+    }
+
+    const message = document.createElement("div");
+    message.className = `ai-message ai-message-${type}`;
+    message.textContent = text;
+
+    aiChatBody.appendChild(message);
+    scrollAiChatToBottom();
+
+    return message;
+};
+
+const setAiChatBusy = (isBusy) => {
+    aiChatBusy = isBusy;
+
+    if (aiChatInput) {
+        aiChatInput.disabled = isBusy;
+    }
+
+    if (aiChatSend) {
+        aiChatSend.disabled = isBusy;
+    }
+
+    aiChatSuggestions.forEach((button) => {
+        button.disabled = isBusy;
+    });
+};
+
+const sendAiMessage = async (messageText) => {
+    const message = messageText.trim();
+
+    if (!message || aiChatBusy) {
+        return;
+    }
+
+    setAiChatOpen(true);
+    addAiMessage(message, "user");
+
+    if (aiChatInput) {
+        aiChatInput.value = "";
+    }
+
+    setAiChatBusy(true);
+
+    const thinkingMessage = addAiMessage(
+        "Thinking...",
+        "assistant"
+    );
+
+    try {
+        const response = await fetch(AI_CHAT_ENDPOINT, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                message
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.reply) {
+            throw new Error(
+                data.error || "AI request failed."
+            );
+        }
+
+        if (thinkingMessage) {
+            thinkingMessage.textContent = data.reply;
+        }
+    } catch (error) {
+        if (thinkingMessage) {
+            thinkingMessage.textContent =
+                "Sorry, the BoskoLab AI Assistant is temporarily unavailable. Please try again.";
+        }
+    } finally {
+        setAiChatBusy(false);
+        scrollAiChatToBottom();
+
+        if (aiChatInput) {
+            aiChatInput.focus();
+        }
     }
 };
 
@@ -124,18 +226,17 @@ if (aiChat && aiChatToggle && aiChatPanel) {
 
     aiChatSuggestions.forEach((button) => {
         button.addEventListener("click", () => {
-            if (!aiChatInput) {
-                return;
-            }
-
-            aiChatInput.value = button.textContent.trim();
-            aiChatInput.focus();
+            sendAiMessage(button.textContent.trim());
         });
     });
 
     if (aiChatForm) {
         aiChatForm.addEventListener("submit", (event) => {
             event.preventDefault();
+
+            if (aiChatInput) {
+                sendAiMessage(aiChatInput.value);
+            }
         });
     }
 
