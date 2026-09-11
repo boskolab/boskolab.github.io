@@ -959,6 +959,23 @@ section {
     color: #dbeafe;
 }
 
+.ai-message + .ai-message {
+    margin-top: 12px;
+}
+
+.ai-message-user {
+    margin-left: auto;
+    background: #2563eb;
+    color: #ffffff;
+}
+
+.ai-chat-form input:disabled,
+.ai-chat-form button:disabled,
+.ai-chat-suggestions button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
 .ai-chat-suggestions {
     margin-top: 16px;
     display: flex;
