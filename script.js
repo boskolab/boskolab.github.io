@@ -80,6 +80,8 @@ const AI_CHAT_ENDPOINT =
 
 const AI_CHAT_STORAGE_KEY = "boskolab-ai-chat-history";
 
+const AI_CHAT_HISTORY_LIMIT = 8;
+
 const aiChat = document.querySelector(".ai-chat");
 const aiChatToggle = document.querySelector(".ai-chat-toggle");
 const aiChatPanel = document.querySelector(".ai-chat-panel");
@@ -136,6 +138,20 @@ const saveAiChatHistory = () => {
     } catch (error) {
         // Ignore storage errors so the chatbot can still work normally.
     }
+};
+
+const getAiConversationContext = () => {
+    return aiChatHistory
+        .slice(-AI_CHAT_HISTORY_LIMIT)
+        .map((message) => {
+            return {
+                role:
+                    message.type === "user"
+                        ? "user"
+                        : "assistant",
+                content: message.text
+            };
+        });
 };
 
 const setAiChatOpen = (isOpen) => {
@@ -217,6 +233,9 @@ const sendAiMessage = async (messageText) => {
         return;
     }
 
+    const conversationHistory =
+        getAiConversationContext();
+
     setAiChatOpen(true);
     addAiMessage(message, "user");
 
@@ -249,7 +268,8 @@ const sendAiMessage = async (messageText) => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                message
+                message,
+                history: conversationHistory
             })
         });
 
