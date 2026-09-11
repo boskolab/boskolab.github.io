@@ -160,10 +160,21 @@ const sendAiMessage = async (messageText) => {
 
     setAiChatBusy(true);
 
-    const thinkingMessage = addAiMessage(
-        "Thinking...",
-        "assistant"
-    );
+    const thinkingMessage = addAiMessage("", "assistant");
+
+    if (thinkingMessage) {
+        thinkingMessage.classList.add("ai-message-typing");
+        thinkingMessage.setAttribute(
+            "aria-label",
+            "BoskoLab AI is typing"
+        );
+
+        for (let i = 0; i < 3; i += 1) {
+            const dot = document.createElement("span");
+            dot.className = "ai-typing-dot";
+            thinkingMessage.appendChild(dot);
+        }
+    }
 
     try {
         const response = await fetch(AI_CHAT_ENDPOINT, {
@@ -185,10 +196,18 @@ const sendAiMessage = async (messageText) => {
         }
 
         if (thinkingMessage) {
+            thinkingMessage.classList.remove(
+                "ai-message-typing"
+            );
+            thinkingMessage.removeAttribute("aria-label");
             thinkingMessage.textContent = data.reply;
         }
     } catch (error) {
         if (thinkingMessage) {
+            thinkingMessage.classList.remove(
+                "ai-message-typing"
+            );
+            thinkingMessage.removeAttribute("aria-label");
             thinkingMessage.textContent =
                 "Sorry, the BoskoLab AI Assistant is temporarily unavailable. Please try again.";
         }
