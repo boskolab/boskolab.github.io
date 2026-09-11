@@ -78,6 +78,8 @@ updateNavigationState();
 const AI_CHAT_ENDPOINT =
     "https://boskolab-ai-assistant.boskoj23.workers.dev/chat";
 
+const AI_CHAT_STORAGE_KEY = "boskolab-ai-chat-history";
+
 const aiChat = document.querySelector(".ai-chat");
 const aiChatToggle = document.querySelector(".ai-chat-toggle");
 const aiChatPanel = document.querySelector(".ai-chat-panel");
@@ -92,6 +94,49 @@ const aiChatSuggestions = document.querySelectorAll(
 );
 
 let aiChatBusy = false;
+let aiChatHistory = [];
+
+const loadAiChatHistory = () => {
+    try {
+        const storedHistory = sessionStorage.getItem(
+            AI_CHAT_STORAGE_KEY
+        );
+
+        if (!storedHistory) {
+            return [];
+        }
+
+        const parsedHistory = JSON.parse(storedHistory);
+
+        if (!Array.isArray(parsedHistory)) {
+            return [];
+        }
+
+        return parsedHistory.filter((message) => {
+            return (
+                message &&
+                typeof message.text === "string" &&
+                (
+                    message.type === "user" ||
+                    message.type === "assistant"
+                )
+            );
+        });
+    } catch (error) {
+        return [];
+    }
+};
+
+const saveAiChatHistory = () => {
+    try {
+        sessionStorage.setItem(
+            AI_CHAT_STORAGE_KEY,
+            JSON.stringify(aiChatHistory)
+        );
+    } catch (error) {
+        // Ignore storage errors so the chatbot can still work normally.
+    }
+};
 
 const setAiChatOpen = (isOpen) => {
     if (!aiChat || !aiChatToggle || !aiChatPanel) {
@@ -122,10 +167,31 @@ const addAiMessage = (text, type) => {
     message.className = `ai-message ai-message-${type}`;
     message.textContent = text;
 
-    aiChatBody.appendChild(message);
+    const suggestions = aiChatBody.querySelector(
+        ".ai-chat-suggestions"
+    );
+
+    if (suggestions) {
+        aiChatBody.insertBefore(message, suggestions);
+    } else {
+        aiChatBody.appendChild(message);
+    }
+
     scrollAiChatToBottom();
 
     return message;
+};
+
+const restoreAiChatHistory = () => {
+    aiChatHistory = loadAiChatHistory();
+
+    if (!aiChatHistory.length) {
+        return;
+    }
+
+    aiChatHistory.forEach((message) => {
+        addAiMessage(message.text, message.type);
+    });
 };
 
 const setAiChatBusy = (isBusy) => {
@@ -202,6 +268,19 @@ const sendAiMessage = async (messageText) => {
             thinkingMessage.removeAttribute("aria-label");
             thinkingMessage.textContent = data.reply;
         }
+
+        aiChatHistory.push(
+            {
+                text: message,
+                type: "user"
+            },
+            {
+                text: data.reply,
+                type: "assistant"
+            }
+        );
+
+        saveAiChatHistory();
     } catch (error) {
         if (thinkingMessage) {
             thinkingMessage.classList.remove(
@@ -220,6 +299,8 @@ const sendAiMessage = async (messageText) => {
         }
     }
 };
+
+restoreAiChatHistory();
 
 if (aiChat && aiChatToggle && aiChatPanel) {
     aiChatToggle.addEventListener("click", () => {
