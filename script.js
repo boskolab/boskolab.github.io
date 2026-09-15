@@ -85,6 +85,7 @@ const AI_CHAT_HISTORY_LIMIT = 8;
 const aiChat = document.querySelector(".ai-chat");
 const aiChatToggle = document.querySelector(".ai-chat-toggle");
 const aiChatPanel = document.querySelector(".ai-chat-panel");
+const aiChatNew = document.querySelector(".ai-chat-new");
 const aiChatMinimize = document.querySelector(".ai-chat-minimize");
 const aiChatClose = document.querySelector(".ai-chat-close");
 const aiChatBody = document.querySelector(".ai-chat-body");
@@ -210,6 +211,47 @@ const restoreAiChatHistory = () => {
     });
 };
 
+const resetAiChat = () => {
+    if (aiChatBusy || !aiChatBody) {
+        return;
+    }
+
+    aiChatHistory = [];
+
+    try {
+        sessionStorage.removeItem(AI_CHAT_STORAGE_KEY);
+    } catch (error) {
+        // Ignore storage errors so the chatbot can still work normally.
+    }
+
+    aiChatBody.innerHTML = `
+        <div class="ai-message ai-message-assistant">
+            Hi! I'm the BoskoLab AI Assistant. How can I help?
+        </div>
+        <div class="ai-chat-suggestions">
+            <button type="button">What services does BoskoLab offer?</button>
+            <button type="button">How can AI automation help my business?</button>
+            <button type="button">How can I start a project?</button>
+        </div>
+    `;
+
+    const newSuggestions = aiChatBody.querySelectorAll(
+        ".ai-chat-suggestions button"
+    );
+
+    newSuggestions.forEach((button) => {
+        button.addEventListener("click", () => {
+            sendAiMessage(button.textContent.trim());
+        });
+    });
+
+    if (aiChatInput) {
+        aiChatInput.value = "";
+        aiChatInput.focus();
+    }
+
+    scrollAiChatToBottom();
+};
 const setAiChatBusy = (isBusy) => {
     aiChatBusy = isBusy;
 
@@ -219,8 +261,12 @@ const setAiChatBusy = (isBusy) => {
 
     if (aiChatSend) {
         aiChatSend.disabled = isBusy;
+        
     }
-
+    if (aiChatNew) {
+    aiChatNew.disabled = isBusy;
+    }
+    
     aiChatSuggestions.forEach((button) => {
         button.disabled = isBusy;
     });
@@ -329,7 +375,13 @@ if (aiChat && aiChatToggle && aiChatPanel) {
 
         setAiChatOpen(!isOpen);
     });
-
+    
+    if (aiChatNew) {
+    aiChatNew.addEventListener("click", () => {
+        resetAiChat();
+    });
+}
+    
     if (aiChatMinimize) {
         aiChatMinimize.addEventListener("click", () => {
             setAiChatOpen(false);
