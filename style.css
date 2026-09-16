@@ -75,6 +75,39 @@ body {
     gap: 30px;
 }
 
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+}
+
+.language-switcher {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.language-option {
+    color: #94a3b8;
+    text-decoration: none;
+    transition: color 0.25s ease;
+}
+
+.language-option:hover,
+.language-option.active {
+    color: #60a5fa;
+}
+
+.language-option:focus-visible {
+    outline: 2px solid rgba(96, 165, 250, 0.8);
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
 .nav-links a {
     position: relative;
     color: #cbd5e1;
@@ -593,28 +626,48 @@ section {
 @media (max-width: 600px) {
 
     .site-nav {
-        height: 64px;
-        padding: 0 20px;
-    }
-
-    html {
-        scroll-padding-top: 88px;
-    }
-
-    section {
-        scroll-margin-top: 88px;
+        height: 92px;
+        padding: 0 16px;
+        align-items: flex-start;
     }
 
     .nav-brand {
+        margin-top: 14px;
         font-size: 18px;
     }
 
+    .nav-right {
+        width: 100%;
+        gap: 0;
+    }
+
+    .language-switcher {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        gap: 5px;
+        font-size: 11px;
+    }
+
     .nav-links {
-        gap: 16px;
+        position: absolute;
+        left: 16px;
+        right: 16px;
+        bottom: 14px;
+        justify-content: space-between;
+        gap: 10px;
     }
 
     .nav-links a {
-        font-size: 13px;
+        font-size: 12px;
+    }
+
+    html {
+        scroll-padding-top: 116px;
+    }
+
+    section {
+        scroll-margin-top: 116px;
     }
 
     .hero {
@@ -752,6 +805,10 @@ section {
 
 .ai-chat-toggle::after {
     content: "Ask BoskoLab AI";
+}
+
+html[lang="cnr"] .ai-chat-toggle::after {
+    content: "Pitaj BoskoLab AI";
 }
 
 .ai-chat-toggle:hover {
@@ -1161,6 +1218,7 @@ section {
     .site-nav,
     .nav-links a,
     .nav-links a::after,
+    .language-option,
     .logo,
     .btn,
     .service-card,
