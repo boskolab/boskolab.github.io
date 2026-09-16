@@ -78,7 +78,33 @@ updateNavigationState();
 const AI_CHAT_ENDPOINT =
     "https://boskolab-ai-assistant.boskoj23.workers.dev/chat";
 
-const AI_CHAT_STORAGE_KEY = "boskolab-ai-chat-history";
+const siteLanguage = document.documentElement.lang === "cnr" ? "mne" : "en";
+
+const AI_CHAT_TEXT = {
+    en: {
+        greeting: "Hi! I'm the BoskoLab AI Assistant. How can I help?",
+        suggestions: [
+            "What services does BoskoLab offer?",
+            "How can AI automation help my business?",
+            "How can I start a project?"
+        ],
+        typingLabel: "BoskoLab AI is typing",
+        unavailable: "Sorry, the BoskoLab AI Assistant is temporarily unavailable. Please try again."
+    },
+    mne: {
+        greeting: "Zdravo! Ja sam BoskoLab AI asistent. Kako mogu da Vam pomognem?",
+        suggestions: [
+            "Koje usluge nudi BoskoLab?",
+            "Kako AI automatizacija može pomoći mom poslovanju?",
+            "Kako mogu započeti projekat?"
+        ],
+        typingLabel: "BoskoLab AI piše",
+        unavailable: "BoskoLab AI asistent trenutno nije dostupan. Molimo pokušajte ponovo."
+    }
+};
+
+const aiChatText = AI_CHAT_TEXT[siteLanguage];
+const AI_CHAT_STORAGE_KEY = `boskolab-ai-chat-history-${siteLanguage}`;
 
 const AI_CHAT_HISTORY_LIMIT = 8;
 
@@ -224,16 +250,21 @@ const resetAiChat = () => {
         // Ignore storage errors so the chatbot can still work normally.
     }
 
-    aiChatBody.innerHTML = `
-        <div class="ai-message ai-message-assistant">
-            Hi! I'm the BoskoLab AI Assistant. How can I help?
-        </div>
-        <div class="ai-chat-suggestions">
-            <button type="button">What services does BoskoLab offer?</button>
-            <button type="button">How can AI automation help my business?</button>
-            <button type="button">How can I start a project?</button>
-        </div>
-    `;
+    aiChatBody.innerHTML = "";
+
+    addAiMessage(aiChatText.greeting, "assistant");
+
+    const suggestions = document.createElement("div");
+    suggestions.className = "ai-chat-suggestions";
+
+    aiChatText.suggestions.forEach((suggestionText) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.textContent = suggestionText;
+        suggestions.appendChild(button);
+    });
+
+    aiChatBody.appendChild(suggestions);
 
     const newSuggestions = aiChatBody.querySelectorAll(
         ".ai-chat-suggestions button"
@@ -264,10 +295,12 @@ const setAiChatBusy = (isBusy) => {
         
     }
     if (aiChatNew) {
-    aiChatNew.disabled = isBusy;
+        aiChatNew.disabled = isBusy;
     }
     
-    aiChatSuggestions.forEach((button) => {
+    aiChatBody?.querySelectorAll(
+        ".ai-chat-suggestions button"
+    ).forEach((button) => {
         button.disabled = isBusy;
     });
 };
@@ -297,7 +330,7 @@ const sendAiMessage = async (messageText) => {
         thinkingMessage.classList.add("ai-message-typing");
         thinkingMessage.setAttribute(
             "aria-label",
-            "BoskoLab AI is typing"
+            aiChatText.typingLabel
         );
 
         for (let i = 0; i < 3; i += 1) {
@@ -354,7 +387,7 @@ const sendAiMessage = async (messageText) => {
             );
             thinkingMessage.removeAttribute("aria-label");
             thinkingMessage.textContent =
-                "Sorry, the BoskoLab AI Assistant is temporarily unavailable. Please try again.";
+                aiChatText.unavailable;
         }
     } finally {
         setAiChatBusy(false);
@@ -377,10 +410,10 @@ if (aiChat && aiChatToggle && aiChatPanel) {
     });
     
     if (aiChatNew) {
-    aiChatNew.addEventListener("click", () => {
-        resetAiChat();
-    });
-}
+        aiChatNew.addEventListener("click", () => {
+            resetAiChat();
+        });
+    }
     
     if (aiChatMinimize) {
         aiChatMinimize.addEventListener("click", () => {
